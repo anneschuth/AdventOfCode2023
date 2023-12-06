@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check if the parameter is provided
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <day_number>"
+    exit 1
+fi
+
+# Assign the parameter to a variable
+day_number=$1
+
+# Create a directory named "dayN"
+mkdir "day$day_number"
+
+# Change directory to "dayN"
+cd "day$day_number"
+
+# Run the command `aoc d -d n`
+aoc d -d "$day_number"
+
+# Move 'input' to 'input.txt'
+mv input input.txt
+
+# Extract text between triple backticks from 'puzzle.md' and save to 'input_test.txt'
+awk '/^```/{flag=!flag;next} flag' puzzle.md > input_test.txt
+
+
+# Copy the template 'part1.py' to the current directory
+cp /Users/anneschuth/AdventOfCode2023/templates/part1.py .
+
+echo "Setup complete for day $day_number."
