@@ -24,8 +24,10 @@ mv input input.txt
 # Extract text between triple backticks from 'puzzle.md' and save to 'input_test.txt'
 awk '/^```/{flag=!flag;next} flag' puzzle.md > input_test.txt
 
-
 # Copy the template 'part1.py' to the current directory
 cp /Users/anneschuth/AdventOfCode2023/templates/part1.py .
+
+cd ..
+git add "day$day_number"
 
 echo "Setup complete for day $day_number."
