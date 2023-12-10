@@ -48,6 +48,9 @@ while TODO:
             N.append(n)
     TODO = N
 
+# PART 1 Done
+
+# Mark main loop
 TODO = []
 print_grid(GRID)
 for x in range(len(STEPS)):
@@ -62,26 +65,31 @@ for x in range(len(STEPS)):
 
 print_grid(GRID)
 
-
-
+# Expand so we can squeeze (we use " " to make room)
 EXPANDED = []
 for x in range(len(GRID)):
     row = []
     for y in range(len(GRID[x])):
         row.append(GRID[x][y])
-        if y < len(GRID[x])-1:
+        if y < len(GRID[x]) - 1:
             row.append(" ")
     EXPANDED.append(row)
-    if x < len(GRID)-1:
+    if x < len(GRID) - 1:
         EXPANDED.append([" "] * len(row))
 print_grid(EXPANDED)
 
+# Connect lines in the expanded grid (and find starting points)
 for x in range(len(EXPANDED)):
     for y in range(len(EXPANDED[x])):
+        # these are starting points
         if EXPANDED[x][y] == "O":
             TODO.append((x, y))
+
+        # leave the original grid alone
         if EXPANDED[x][y] != " ":
             continue
+
+        # Connect horizontal lines
         try:
             left = EXPANDED[x][y - 1]
             right = EXPANDED[x][y + 1]
@@ -89,6 +97,8 @@ for x in range(len(EXPANDED)):
                 EXPANDED[x][y] = "-"
         except:
             continue
+
+        # Connect vertical lines
         try:
             up = EXPANDED[x - 1][y]
             down = EXPANDED[x + 1][y]
@@ -99,7 +109,7 @@ for x in range(len(EXPANDED)):
 
 print_grid(EXPANDED)
 
-print("TODO", TODO)
+# Expand starting points
 while TODO:
     N = []
     for x, y in TODO:
@@ -108,10 +118,13 @@ while TODO:
                 if i == 0 and j == 0:
                     continue
                 if 0 <= x + i < len(EXPANDED) and 0 <= y + j < len(EXPANDED[0]):
+                    # We can squeeze through ground and empty space, nothing else
                     if EXPANDED[x + i][y + j] in {".", " "}:
                         N.append((x + i, y + j))
                         EXPANDED[x + i][y + j] = "O"
     TODO = N
+
 print_grid(EXPANDED)
 
+# Count insides
 print("SUM:", sum([grid.count(".") for grid in EXPANDED]))
