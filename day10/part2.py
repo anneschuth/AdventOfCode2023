@@ -50,7 +50,7 @@ while TODO:
 
 # PART 1 Done
 
-# Mark main loop
+# Mark main loop, ground, and starting points
 TODO = []
 print_grid(GRID)
 for x in range(len(STEPS)):
